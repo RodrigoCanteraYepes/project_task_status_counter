@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_project_kanban_inherit_status_counter" model="ir.ui.view">
+        <field name="name">project.project.kanban.inherit.status.counter</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.view_project_kanban"/>
+        <field name="arch" type="xml">
+            <!-- Add the computed count fields to the kanban view -->
+            <xpath expr="//field[@name='task_count']" position="after">
+                <field name="task_in_progress_count"/>
+                <field name="task_changes_requested_count"/>
+                <field name="task_approved_count"/>
+                <field name="task_done_count"/>
+                <field name="task_canceled_count"/>
+                <field name="task_in_progress_percent"/>
+                <field name="task_changes_requested_percent"/>
+                <field name="task_approved_percent"/>
+                <field name="task_done_percent"/>
+                <field name="task_canceled_percent"/>
+            </xpath>
+            
+            <!-- Add the status counts display after the main card content -->
+            <xpath expr="//div[hasclass('o_kanban_card_content')]" position="after">
+                <div class="o_project_status_counts" t-if="record.task_count.raw_value > 0">
+                    <div class="o_status_counts_container">
+                        <t t-if="record.task_in_progress_count.raw_value > 0">
+                            <span class="o_status_badge o_status_in_progress" 
+                                  t-att-title="record.task_in_progress_percent.value">
+                                <i class="fa fa-play-circle" title="En Progreso"/>
+                                <t t-esc="record.task_in_progress_count.value"/>
+                            </span>
+                        </t>
+                        <t t-if="record.task_changes_requested_count.raw_value > 0">
+                            <span class="o_status_badge o_status_changes_requested"
+                                  t-att-title="record.task_changes_requested_percent.value">
+                                <i class="fa fa-edit" title="Cambios Solicitados"/>
+                                <t t-esc="record.task_changes_requested_count.value"/>
+                            </span>
+                        </t>
+                        <t t-if="record.task_approved_count.raw_value > 0">
+                            <span class="o_status_badge o_status_approved"
+                                  t-att-title="record.task_approved_percent.value">
+                                <i class="fa fa-thumbs-up" title="Aprobado"/>
+                                <t t-esc="record.task_approved_count.value"/>
+                            </span>
+                        </t>
+                        <t t-if="record.task_done_count.raw_value > 0">
+                            <span class="o_status_badge o_status_done"
+                                  t-att-title="record.task_done_percent.value">
+                                <i class="fa fa-check-circle" title="Completado"/>
+                                <t t-esc="record.task_done_count.value"/>
+                            </span>
+                        </t>
+                        <t t-if="record.task_canceled_count.raw_value > 0">
+                            <span class="o_status_badge o_status_canceled"
+                                  t-att-title="record.task_canceled_percent.value">
+                                <i class="fa fa-times-circle" title="Cancelado"/>
+                                <t t-esc="record.task_canceled_count.value"/>
+                            </span>
+                        </t>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
