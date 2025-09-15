@@ -20,7 +20,7 @@
             </xpath>
             
             <!-- Add the status counts display after the main card content -->
-            <xpath expr="//div[hasclass('o_kanban_card_content')]" position="after">
+            <xpath expr="//div[hasclass('o_project_kanban_boxes')]" position="after">
                 <div class="o_project_status_counts" t-if="record.task_in_progress_count.raw_value > 0 or record.task_changes_requested_count.raw_value > 0 or record.task_approved_count.raw_value > 0 or record.task_done_count.raw_value > 0 or record.task_canceled_count.raw_value > 0">
                     <div class="o_status_counts_container">
                         <t t-if="record.task_in_progress_count.raw_value > 0">
